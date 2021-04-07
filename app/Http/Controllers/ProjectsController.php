@@ -14,8 +14,8 @@ class ProjectsController extends Controller
      */
     public function index()
     {
-        $Projects=Project::all();
-        return $Projects;
+        $projects=Project::all();
+        return view('projects.index', compact('projects'));
     }
 
     /**
@@ -45,11 +45,9 @@ class ProjectsController extends Controller
     //    $project ->save();
 
         Project::create(
-            request()->validate([
-                'title' => 'required|min:3'
-            ])
+            $this -> validateProject()
         );
-        return redirect('/projects');
+        return redirect(route('projects.index'));
     }
 
     /**
@@ -85,12 +83,17 @@ class ProjectsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Project $project)
     {
-        $project=Project::find($id);
-        $project->title=request('title');
-        $project->save();
-        return redirect('/projects');
+        // $project=Project::find($id);
+        // $project->title=request('title');
+        // $project->save();
+
+        $project->update(
+            $this->validateProject()
+        );
+
+        return redirect($project->path());
     }
 
     /**
@@ -104,5 +107,10 @@ class ProjectsController extends Controller
         $project=Project::find($id);
         $project->delete();
         return redirect('/projects');
+    }
+
+    protected function validateProject()
+    {
+        return request()->validate([ 'title' => 'required|min:3' ]);
     }
 }

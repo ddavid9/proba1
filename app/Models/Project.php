@@ -8,4 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Project extends Model
 {
     use HasFactory;
+
+    //protected $fillable=['title'];
+    protected $guarded=[];
+
+    public function path()
+    {
+        return route('projects.show', $this);
+    }
 }

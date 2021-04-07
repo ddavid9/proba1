@@ -56,9 +56,9 @@ Route::get('/xyz', function () {
 Route::get('/posts/{post}', [App\Http\Controllers\PostsController::class, 'show']);
 
 
-Route::get('/projects', [App\Http\Controllers\ProjectsController::class, 'index']);
+Route::get('/projects', [App\Http\Controllers\ProjectsController::class, 'index'])->name('projects.index');
 Route::get('/projects/create', [App\Http\Controllers\ProjectsController::class, 'create']);
-Route::get('/projects/{project}', [App\Http\Controllers\ProjectsController::class, 'show']);
+Route::get('/projects/{project}', [App\Http\Controllers\ProjectsController::class, 'show'])->name('projects.show');
 Route::post('/projects', [App\Http\Controllers\ProjectsController::class, 'store']);
 Route::get('/projects/{project}/edit',[App\Http\Controllers\ProjectsController::class, 'edit']);
 Route::put('/projects/{project}', [App\Http\Controllers\ProjectsController::class, 'update']);
